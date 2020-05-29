@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <title>Megafrutta</title>
     <style>
+      @font-face {
+        font-family: typewriter;
+        src: url(typewriter.ttf);
+      }
+      body {
+        font-family: typewriter;
+      }
       /* Chrome, Safari, Edge, Opera */
       input::-webkit-outer-spin-button,
       input::-webkit-inner-spin-button {
@@ -21,23 +28,29 @@
       }
       button,
       input {
-        font-size: 34px;
+        font-size: 52px;
+      }
+
+      button {
+        background-color: #ff5349;
+        border: solid 2px #ff5349;
+        box-shadow: 1px 1px 1px lightgray;
       }
       p {
-        font-size: 40px;
+        font-size: 50px;
         margin-top: 10px;
         margin-bottom: 10px;
       }
       .right {
-        float: right;
+        position: absolute;
+        right: 10px;
       }
-      .left {
-        display: inline-block;
-      }
+
       .presentacion {
-        width: 120px;
         display: inline-block;
         padding-left: 4px;
+        width: 90px;
+        font-size: 30px;
       }
     </style>
   </head>
@@ -47,10 +60,33 @@
       let products = [
         ["AGUACATE EXTRA", "KILO"],
         ["ALFALFA GERMINADA", "PIEZA"],
+        ["APIO U.S.A", "MAZO"],
+        ["BETABEL", "KILO"],
+        ["BROCOLI NACIONAL", "KILO"],
+        ["CALABACITA ITALIANA", "KILO"],
+        ["CALABACITA NEGRA", "KILO"],
+        ["CEBOLLA BLANCA", "KILO"],
+        ["CEBOLLA MORADA", "KILO"],
+        ["CEBOLLITA CAMBRAY", "MAZO"],
+        ["CHAMPIÑON 250GR", "PIEZA"],
+        ["CHAYOTE", "KILO"],
+        ["CHILE CARIBE", "KILO"],
+        ["CHILE HABANERO", "KILO"],
+        ["CHILE JALAPEÑO", "KILO"],
+        ["CHILE POBLANO", "KILO"],
+        ["CHILE SERRANO", "KILO"],
+        ["CHILE VERDE", "KILO"],
+        ["CILANTRO", "MAZO"],
+        ["CIRUELA ROJA", "KILO"],
+        ["COL MORADA", "KILO"],
+        ["COLIFLOR", "PIEZA"],
+        ["DURAZNO", "KILO"],
+        ["EJOTE VERDE", "KILO"],
+        ["", "KILO"],
       ];
       let html = "";
       products.forEach((p, i) => {
-        console.log(p, i);
+        
         html +=
           "<p>" +
           "<span class='left'>" +
@@ -73,10 +109,11 @@
           "<span class='presentacion'>" +
           p[1] +
           "</span>" +
-          "</span>";
-        "</p>" + "<hr/>";
+          "</span>" +
+          "</p>" +
+          "<hr/>";
       });
-      console.log(html);
+      
       document.getElementById("list").innerHTML = html;
     </script>
   </body>
