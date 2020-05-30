@@ -202,9 +202,6 @@ function copyList() {
         "S      " +
         nval +
         " " +
-        (products[i][2] !== "0.00"
-          ? priceTimesQuantity.toFixed(2)
-          : "pendiente") +
         "\n";
       bottomHTML +=
         "<div>" +
@@ -238,9 +235,6 @@ function copyList() {
         "      " +
         nval +
         " " +
-        (products[i][2] !== "0.00"
-          ? priceTimesQuantity.toFixed(2)
-          : "pendiente") +
         "\n";
       bottomHTML +=
         "•" +
