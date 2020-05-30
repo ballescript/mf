@@ -116,13 +116,25 @@ let products = [
   ["PIMIENTA ENTERA", "KILO"],
   ["PIMIENTA MOLIDA", "KILO"],
   ["SAL DE AJO", "KILO"],
+  ["SEMILLA DE GIRASOL", "KILO"],
+  ["SOYA", "KILO"],
   ["TAMARINDO", "KILO"],
   ["TEPARI", "KILO"],
   ["TRIGO", "KILO"],
   ["UVA PASA", "KILO"],
 ];
+
+let prices =
+  "60.00	30.00	10.25	15.60	27.33	28.00	18.00	16.20	19.20	6.00	22.25	12.00	32.40	78.00	30.00	36.60	38.40	29.40	4.80	56.40	14.40	30.00	0.00	28.80	5.40	8.40	0.00	28.80	24.60	48.53	12.60	72.00	9.75	17.50	9.75	17.50	35.37	48.00	26.40	27.00	30.00	30.32	28.74	29.68	18.60	19.20	14.40	0.00	26.40	36.00	19.20	18.60	22.80	25.14	28.94	19.20	19.20	58.20	58.20	45.60	16.80	18.00	21.60	20.27	21.60	66.00	6.60	7.64	10.20	12.86	0.00	14.77	34.80	15.60	0.00	8.18	36.00	23.76	22.80	102.00	180.00	78.00	276.00	300.00	36.00	39.60	168.00	60.00	480.00	456.00	102.00	108.00	156.00	48.00	120.00	1680.00	72.00	60.00	72.00	96.00	90.00	24.00	144.00	26.40	30.00	48.00	222.00	84.00	39.60	33.60	132.00	408.00	180.00	156.00	264.00	168.00	54.00	96.00	27.60	36.00	36.00	8.40	66.00";
+
+let pricesSplit = prices.split(/(\s+)/);
+let pricesArray = pricesSplit.filter((x) => x.trim() != "");
+products.forEach((p, i) => {
+  products[i].push(pricesArray[i]);
+});
+
 let html =
-  "<div class='navbar'><p class='subt'>FRUTA Y VERDURA</p></div>";
+  "<div class='navbar'><h1>Megafrutta</h1><p class='subt'>FRUTA Y VERDURA</p></div>";
 products.forEach((p, i) => {
   html +=
     "<div class='parent'>" +
@@ -136,6 +148,10 @@ products.forEach((p, i) => {
     "</div>" +
     "<div class='nowrap'>" +
     "<div class='right'>" +
+    "<span class='price'>$ " +
+    p[2] +
+    "</span>" +
+    "<br/>" +
     "<button onclick='this.parentNode.querySelector(\"#p" +
     i +
     "\").stepDown()'>" +
@@ -164,11 +180,17 @@ document.getElementById("list").innerHTML = html;
 
 function copyList() {
   let finalList = "";
-  let bottomHTML = "<p class='alert'>Texto copiado:</p>";
+  let total = 0;
+  let bottomHTML =
+    "<p class='alert'>Texto copiado</p><span>Lista:</span><br/><br/>";
   for (var i = 0; i < products.length; i++) {
     let elm = "p" + i;
     let nelm = "n" + i;
+
     let val = document.getElementById(elm).value;
+    let priceTimesQuantity = products[i][2] * val;
+    total += priceTimesQuantity;
+
     let nval = document.getElementById(nelm).value;
     if (val > 1) {
       finalList +=
@@ -179,14 +201,27 @@ function copyList() {
         products[i][1] +
         "S      " +
         nval +
+        " " +
+        (products[i][2] !== "0.00"
+          ? priceTimesQuantity.toFixed(2)
+          : "pendiente") +
         "\n";
       bottomHTML +=
+        "<div>" +
+        "•" +
         products[i][0] +
         "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
         val +
         " " +
         products[i][1] +
-        "S";
+        "S" +
+        " " +
+        "</div>" +
+        "<div class='total'>" +
+        (products[i][2] !== "0.00"
+          ? " x " + products[i][2] + " = " + priceTimesQuantity.toFixed(2)
+          : "pendiente") +
+        "</div>";
       if (nval !== "") {
         bottomHTML +=
           "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + nval + "<br/>";
@@ -202,13 +237,26 @@ function copyList() {
         products[i][1] +
         "      " +
         nval +
+        " " +
+        (products[i][2] !== "0.00"
+          ? priceTimesQuantity.toFixed(2)
+          : "pendiente") +
         "\n";
       bottomHTML +=
+        "•" +
         products[i][0] +
         "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
         val +
         " " +
-        products[i][1];
+        products[i][1] +
+        " " +
+        "<div class='total'>" +
+        (products[i][2] !== "0.00"
+          ? val != "1"
+            ? " x " + products[i][2] + " = " + priceTimesQuantity.toFixed(2)
+            : products[i][2]
+          : "pendiente") +
+        "</div>";
       if (nval !== "") {
         bottomHTML +=
           "<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + nval + "<br/>";
@@ -217,6 +265,9 @@ function copyList() {
       }
     }
   }
+
+  let totalString = "Total  $ " + total.toFixed(2);
+  bottomHTML += "<br/><span class='total'>" + totalString + "</span>";
   document.getElementById("bottom").innerHTML = bottomHTML;
 
   copyFinalList(finalList);
