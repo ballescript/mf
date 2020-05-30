@@ -134,7 +134,7 @@ products.forEach((p, i) => {
 });
 
 let html =
-  "<div class='navbar'><h1>Megafrutta</h1><p class='subt'>FRUTA Y VERDURA</p></div>";
+  "<div class='navbar'><p class='subt'>FRUTA Y VERDURA</p></div>";
 products.forEach((p, i) => {
   html +=
     "<div class='parent'>" +
